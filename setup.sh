@@ -2,51 +2,48 @@
 
 # Copyright (c) 2020 CodeBreaker.com.br
 #
-# Este script visa instalar e configurar o projeto CodeBreaker, servindo como um Gerenciador
-# de Módulos, capaz de instalar facilmente módulos (projetos web em PHP) em um servidor Linux
-# baseado na distribuição RedHat CentOS.
+# Este script visa instalar os programas nesserários e realizar as configurações mínimas
+# para a criação de um servidor web básico na distribuição RedHat CentOS.
 
-# Preparando ambiente de configuração
+clear						# limpar tela
 
-clear				# limpar tela
+yum clean all					# Limpar os repositórios
+yum makecache fast				# Limpar e compilar os repositórios no CentOS 7
+yum makecache					# Limpar e compilar os repositórios no CentOS 8
+yum update -y					# Verificar e instalar atualizações sem confirmação
 
-yum clean all
-yum makecache fast
-yum makecache
-yum update -y
-
-yum install firewalld		# instalar a segurança de rede FIREWALLD
-yum install dialog -y		# instalar o gerenciamento de caixas de dialogo DIALOG
-yum install git -y		# instalar o gerenciamento de repositórios GIT
+yum install firewalld				# instalar a segurança de rede FIREWALLD
+yum install dialog -y				# instalar o gerenciamento de dialogos DIALOG
+yum install git -y				# instalar o gerenciamento de repositórios GIT
 
 # Instalação do LAMP (Linux, Apache, MySQL, PHP)
-yum install httpd -y		# instalar o Apache HTTPD
-yum install mariadb-server -y	# instalar Banco de Dados MARIADB
-yum install mariadb -y		# instalar Bando de Dados MARIADB
-yum install php -y		# instalar acesso ao PHP
-yum install php-mysql -y	# instalar acesso ao PHP com MYSQL
-yum install php-mysqlnd -y	# instalar acesso ao PHP com MYSQL
+yum install httpd -y				# instalar o Apache HTTPD
+yum install mariadb-server -y			# instalar Banco de Dados MARIADB
+yum install mariadb -y				# instalar Bando de Dados MARIADB
+yum install php -y				# instalar acesso ao PHP
+yum install php-mysql -y			# instalar acesso ao PHP com MYSQL
+yum install php-mysqlnd -y			# instalar acesso ao PHP com MYSQL
 
-yum clean all
-yum makecache fast
-yum makecache
-yum update
+yum clean all					# Limpar os repositórios
+yum makecache fast				# Limpar e compilar os repositórios no CentOS 7
+yum makecache					# Limpar e configurar os repositórios no CentOS 8
+yum update -y					# Verificar e instalar atualizações sem confirmação
 
-clear
+clear						# limpar tela
 
 # configurar o Git
-git config --global user.name "CentOS Server"
-git config --global user.email noreply
+git config --global user.name "CentOS Server"	# Atribuir nome de utilizador
+git config --global user.email noreply		# Atribuir e-mail de utilizador
 
-clear
-systemctl enable firewalld.service
-systemctl enable httpd.service
-service firewalld.service start
-service httpd.service start
+clear						# limpar os repositórios
+systemctl enable firewalld.service		# habilitar serviço ao reiniciar (FIREWALLD)
+systemctl enable httpd.service			# habilitar serviço ao reiniciar (HTTPD)
+service firewalld.service start			# iniciar serviço (FIREWALLD)
+service httpd.service start			# iniciar serviço (HTTPD)
 
 
-firewall-cmd --permanent --add-port=80/tcp
-firewall-cmd --get-active-zones
-firewall-cmd --permanent --zone=public --add-port=80/tcp
-firewall-cmd --get-active-zones
-firewall-cmd --reload
+firewall-cmd --permanent --add-port=80/tcp	# adicionar porta 80 no firewall
+firewall-cmd --get-active-zones			# verificar zonas ativas no firewall
+firewall-cmd --permanent --zone=public --add-port=80/tcp	# adicionar porta publica
+firewall-cmd --get-active-zones			# verificar zonas ativas no firewall
+firewall-cmd --reload				# reiniciar serviço do firewall
