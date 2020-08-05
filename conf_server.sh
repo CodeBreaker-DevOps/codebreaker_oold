@@ -8,8 +8,7 @@
 clear						# limpar tela
 
 yum clean all					# Limpar os repositórios
-yum makecache fast				# Limpar e compilar os repositórios no CentOS 7
-yum makecache					# Limpar e compilar os repositórios no CentOS 8
+yum makecache fast || yum makecache		# Limpar e compilar repositórios no CentOS 7 ou 8
 yum update -y					# Verificar e instalar atualizações sem confirmação
 
 yum install firewalld				# instalar a segurança de rede FIREWALLD
@@ -25,8 +24,7 @@ yum install php-mysql -y			# instalar acesso ao PHP com MYSQL
 yum install php-mysqlnd -y			# instalar acesso ao PHP com MYSQL
 
 yum clean all					# Limpar os repositórios
-yum makecache fast				# Limpar e compilar os repositórios no CentOS 7
-yum makecache					# Limpar e configurar os repositórios no CentOS 8
+yum makecache fast || yum makecache		# Limpar e configurar repositórios no CentOS 7 ou 8
 yum update -y					# Verificar e instalar atualizações sem confirmação
 
 clear						# limpar tela
@@ -46,4 +44,4 @@ firewall-cmd --permanent --add-port=80/tcp	# adicionar porta 80 no firewall
 firewall-cmd --get-active-zones			# verificar zonas ativas no firewall
 firewall-cmd --permanent --zone=public --add-port=80/tcp	# adicionar porta publica
 firewall-cmd --get-active-zones			# verificar zonas ativas no firewall
-firewall-cmd --reload				# reiniciar serviço do firewall
+firewall-cmd --reload && reboot			# reiniciar firewall e reiniciar
